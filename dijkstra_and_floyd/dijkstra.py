@@ -113,18 +113,19 @@ def dijkstra(adjacencyMatrix, start_node: int):
     
     while not heap.is_empty():
         min_node_cost = distance_list[heap.data[0].nodeID]
-        adjacencyList = adjacencyMatrix[heap.data[0].nodeID]
-        for i in range(len(adjacencyList)):
+        min_list = adjacencyMatrix[heap.data[0].nodeID]
+        for i in range(len(min_list)):
             found_node = heap.find_node_by_ID(i)
-            if (found_node != None) and (min_node_cost + adjacencyList[i] < heap.find_node_by_ID(i).val):
-                heap.find_node_by_ID(i).val = min_node_cost + adjacencyList[i]
-                distance_list[i] = min_node_cost + adjacencyList[i]
+            if (found_node != None) and (min_node_cost + min_list[i] < heap.find_node_by_ID(i).val):
+                heap.find_node_by_ID(i).val = min_node_cost + min_list[i]
+                distance_list[i] = min_node_cost + min_list[i]
         heap.delete_min()
         heap.fix_heap()     
 
     return distance_list
 
 # floyd implemenation from Adjacency Matrix, return a new 2-d array contains all the updated weights 
+# Runtime: O(n^3)
 def floyd(adjacencyMatrix):
     numNodes = len(adjacencyMatrix)
     # With each element in 2-d array Adjacency Matrix (each element is the weight between 2 node FROM i and TO j), we find a node k in between that:
